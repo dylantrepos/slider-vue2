@@ -1,37 +1,42 @@
 <template>
   <div id="app">
-    <p>Relation Parent/child test : {{ todos }}</p>
-    <TodosApp v-model="todos" @input="updateTodos"></TodosApp>
-    <button @click="addTodo">Ajouter une tache</button>
+    <CarouselComponent>
+      <CarouselSlide v-for="n in slides" :key="n" :index="n - 1">
+       <div style="position: absolute; left: 0; right: 0; text-align: center; top: 50%; color: #FFF; font-size: 16px"> Slide numéro {{ n }}</div>
+        <img :src="'https://picsum.photos/630/300?random=' + n" width="100%"> 
+      </CarouselSlide>
+    </CarouselComponent>
+    <button @click="addSlide">Ajouter un slide</button>
+    <button @click="removeSlide">Supprimer une slide</button>
   </div>
 </template>
 
 <script>
-import TodosApp from './components/TodosApp.vue'
+import CarouselComponent from './components/carousel/CarouselComponent.vue';
+import CarouselSlide from './components/carousel/CarouselSlide.vue';
 
-export default {
+export default { 
   name: 'App',
   data() {
     return {
-      todos: [{
-        name: 'Test de todo',
-        completed: false
-      }]
+      slides: 5,
     }
   },
   components: {
-    TodosApp
+    CarouselComponent,
+    CarouselSlide,
   },
   methods: {
-    addTodo() {
-      this.todos.push({
-        name: 'Jeanjean',
-        completed: false
-      })
+    addSlide() {
+      this.slides++
     },
-    updateTodos(newTodos) {
-      this.todos = newTodos;
+    removeSlide() {
+      if(this.slides > 1) this.slides--;
     }
   }
 }
 </script>
+
+<style src="./components/todos.css">
+
+</style>
